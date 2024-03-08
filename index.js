@@ -1,9 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const { collectAllPeriods } = require('./src/database');
+const { collectAllPeriods, periods } = require('./src/storage/database');
 const { updatePeriods } = require('./src/controller/periods.js');
 const { runNewConsumer } = require('./src/kafka/consumer.js');
-const Schedule = require('./src/schedule.js');
 
 require('dotenv').config();
 
@@ -20,7 +19,7 @@ app.use(express.json());
 app.post("/periods", updatePeriods);
 
 collectAllPeriods().then(() => {
-    runNewConsumer(new Schedule()).catch(error => console.error(`[consumer] ${error.message}`, error));
+    runNewConsumer().catch(error => console.error(`[consumer] ${error.message}`, error));
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
     });

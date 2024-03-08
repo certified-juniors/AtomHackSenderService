@@ -1,4 +1,4 @@
-const { collectAllPeriods } = require('../database.js');
+const { collectAllPeriods } = require('../storage/database.js');
 
 const updatePeriods = async (req, res) => {
     collectAllPeriods()

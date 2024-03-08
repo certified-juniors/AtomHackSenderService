@@ -1,21 +1,14 @@
-FROM golang:1.21.3-alpine AS build-stage
+# Fetching the minified node image on apline linux
+FROM node:slim
 
+# Setting up the work directory
 WORKDIR /app
 
-COPY go.mod go.sum ./
-
-RUN go mod download
-
+# Copying all the files in our project
 COPY . .
 
-WORKDIR /app/cmd
+# Installing dependencies
+RUN npm install
 
-RUN go build -o main
-
-FROM alpine AS final
-
-WORKDIR /
-
-COPY --from=build-stage /app/cmd/main /main
-
-ENTRYPOINT ["/main"]
+# Starting our application
+CMD [ "npm", "run", "start" ]

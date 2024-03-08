@@ -1,21 +1,64 @@
+const { periods, unhandledMessages } = require('./period');
+const { downloadFilesFromBucket } = require('./storage/minio');
+const { calculateFileSize } = require('./utils/helpers');
+const axios = require('axios');
+const fs = require('fs');
+
 class Message {
-    constructor(id, title, owner, receivedTime, sentTime, createdAt, deliveryStatus, status, payload, files) {
+    constructor(jsonString) {
+        const {
+            id,
+            title,
+            owner,
+            createdAt,
+            payload,
+            files
+        } = JSON.parse(jsonString);
+
         this.id = id;
         this.title = title;
         this.owner = owner;
-        this.receivedTime = receivedTime;
-        this.sentTime = sentTime;
         this.createdAt = createdAt;
-        this.deliveryStatus = deliveryStatus;
-        this.status = status;
         this.payload = payload;
-        this.files = files;
+        this.files = downloadFilesFromBucket(files);
+        // Размер файла с вложениями в мегабитах
+        this.size = calculateFileSize(jsonString);
+    }
+
+    handle() {
+        for (let period of periods) {
+            if (!period.isPassed() && period.capacity >= this.size) {
+                period.addMessage(this);
+                return;
+            }
+        }
+        unhandledMessages.push(this);
+    }
+
+    async send() {
+        // Отправка сообщения
+        try {
+            const formData = new FormData();
+
+            this.files.forEach(file => {
+                formData.append('files', fs.createReadStream(file.path), {
+                    filename: file.originalname,
+                    contentType: file.mimetype
+                });
+            });
+            const queryString = `?id=${this.id}&title=${this.title}&owner=${this.owner}&createdAt=${this.createdAt}&payload=${this.payload}`;
+
+            const response = await axios.post(`${process.env.DS_HOST}:${process.env.DS_PORT}/api${queryString}`, formData, {
+                'Content-Type': 'multipart/form-data',
+            });
+
+            console.log('Message sended successfully!', response);
+        } catch (error) {
+            console.error('Error while resending message: ', error.code)
+        }
     }
 }
 
-class MessagePayload {
-    constructor(type, content) {
-        this.type = type;
-        this.content = content;
-    }
-}
+module.exports = {
+    Message,
+};

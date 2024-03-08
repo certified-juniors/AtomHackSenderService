@@ -1,6 +1,5 @@
 const { Pool } = require('pg');
-
-let periods = [];
+const { Period, periods, clearPeriods, distributeUnhandledMessages } = require('../period');
 
 require('dotenv').config();
 
@@ -14,10 +13,13 @@ const pool = new Pool({
 
 const collectAllPeriods = async () => {
     try {
+        clearPeriods();
         const res = await pool.query('SELECT * FROM period');
-        periods = res.rows;
-        console.log(periods);
-        return periods;
+        for (let row of res.rows) {
+            periods.push(new Period(row.start_time, row.end_time, row.speed));
+            periods.sort((a, b) => a.start_time - b.start_time);
+        }
+        distributeUnhandledMessages();
     }
     catch (err) {
         console.error(err);
@@ -26,5 +28,4 @@ const collectAllPeriods = async () => {
 
 module.exports = {
     collectAllPeriods,
-    periods
 };
