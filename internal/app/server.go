@@ -22,8 +22,7 @@ func (app *Application) Run() {
 
 	ApiGroup := r.Group("/api/v1")
 	{
-		ApiGroup.POST("/resend")
-		ApiGroup.POST("/")
+		ApiGroup.POST("/periods", app.handler.DownloadPeriods)
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
