@@ -8,7 +8,7 @@ const runNewConsumer = async () => {
     consumer = kafka.consumer({ groupId: Date.now().toString() });
 
     await consumer.connect();
-    await consumer.subscribe({ topic: process.env.MARS_KAFKA_TOPIC, fromBeginning: true });
+    await consumer.subscribe({ topic: process.env.MARS_KAFKA_TOPIC });
 
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {

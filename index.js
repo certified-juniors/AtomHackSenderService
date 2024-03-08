@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const { collectAllPeriods, periods } = require('./src/storage/database');
+const { collectAllPeriods } = require('./src/storage/database');
 const { updatePeriods } = require('./src/controller/periods.js');
 const { runNewConsumer } = require('./src/kafka/consumer.js');
+const { periods } = require('./src/period.js');
 
 require('dotenv').config();
 
@@ -17,6 +18,10 @@ app.use(express.json());
 
 // Define your routes here
 app.post("/periods", updatePeriods);
+app.get("/periods", (req, res) => {
+    console.log("GET /periods", periods);
+    res.status(200).send();
+});
 
 collectAllPeriods().then(() => {
     runNewConsumer().catch(error => console.error(`[consumer] ${error.message}`, error));

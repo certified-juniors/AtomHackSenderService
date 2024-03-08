@@ -1,6 +1,6 @@
 const { periods, unhandledMessages } = require('./period');
 const { downloadFilesFromBucket } = require('./storage/minio');
-const { calculateFileSize } = require('./utils/helpers');
+const { calculateFileSize, calculateAllowedSize } = require('./utils/helpers');
 const axios = require('axios');
 const fs = require('fs');
 
@@ -27,7 +27,7 @@ class Message {
 
     handle() {
         for (let period of periods) {
-            if (!period.isPassed() && period.capacity >= this.size) {
+            if (!period.isPassed() && period.capacity >= this.size && calculateAllowedSize(new Date(Date.now()).toISOString(), period.end_time, period.speed) >= this.size) {
                 period.addMessage(this);
                 return;
             }

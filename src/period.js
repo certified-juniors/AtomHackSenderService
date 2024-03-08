@@ -4,11 +4,11 @@ let periods = [];
 let unhandledMessages = [];
 
 function clearPeriods() {
-    for (let period in periods) {
-        unhandledMessages.unshift(...period.message);
+    for (let period of periods) {
+        unhandledMessages.unshift(...period.messages);
     }
 
-    periods = [];
+    periods.splice(0, periods.length);
 };
 
 function distributeUnhandledMessages() {
