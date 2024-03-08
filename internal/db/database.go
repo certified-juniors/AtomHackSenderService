@@ -8,9 +8,9 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-type Database struct{
+type Database struct {
 	DatabaseGORM *gorm.DB
-	DatabaseCfg *config.Database
+	DatabaseCfg  *config.Database
 }
 
 func (d *Database) New(cfg *config.Database) error {
@@ -27,13 +27,6 @@ func (d *Database) New(cfg *config.Database) error {
 	if err != nil {
 		log.Info("execute database connection")
 		return err
-	}
-
-	if cfg.AutoMigrate {
-		log.Info("execute database migrations")
-		if err := Migrate(d.DatabaseGORM); err != nil {
-			return err
-		}
 	}
 
 	return nil
