@@ -31,6 +31,7 @@ func (c *Consumer) ConsumeMessage(topic string) {
 
 	defer partitionCosumer.Close()
 
+	// TODO: Check for correct work
 	for {
 		select {
 		case msg := <-partitionCosumer.Messages():

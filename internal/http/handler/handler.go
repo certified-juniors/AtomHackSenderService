@@ -3,7 +3,7 @@ package handler
 import (
 	"github.com/SicParv1sMagna/AtomHackMarsService/internal/config"
 	"github.com/SicParv1sMagna/AtomHackMarsService/internal/http/repository"
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/SicParv1sMagna/AtomHackMarsService/internal/kafka"
 	log "github.com/sirupsen/logrus"
 )
 
