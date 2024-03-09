@@ -1,4 +1,4 @@
-const { calculateAllowedSize } = require("./utils/helpers");
+const { calculateAllowedSize, formatTimeToTimestamp } = require("./utils/helpers");
 
 let periods = [];
 let unhandledMessages = [];
@@ -46,19 +46,18 @@ class Period {
                 console.log("Period from", this.start_time, "to", this.end_time, "is started");
                 await this.sendMessages(); //
                 this.busy = false;
-            }, new Date(Date.UTC(this.end_time.getFullYear(), this.end_time.getMonth(), this.end_time.getDate(), this.end_time.getHours(), this.end_time.getMinutes(), this.end_time.getSeconds())) - new Date(Date.now()));
+            }, new Date(this.end_time).toLocaleString("en-US", {timeZone: "Europe/Moscow"}) - new Date(Date.now()));
         })();
     }
 
     isPassed() {
-        return new Date(Date.now()) > new Date(Date.UTC(this.end_time.getFullYear(), this.end_time.getMonth(), this.end_time.getDate(), this.end_time.getHours(), this.end_time.getMinutes(), this.end_time.getSeconds()));
+        return new Date(Date.now()).toLocaleString("en-US", {timeZone: "Europe/Moscow"}) > new Date(this.end_time);
     }
 
     isStarted() {
-        console.log("CURRENT DATE", (new Date(Date.now())));
-        const startUTC = new Date(Date.UTC(this.start_time.getFullYear(), this.start_time.getMonth(), this.start_time.getDate(), this.start_time.getHours(), this.start_time.getMinutes(), this.start_time.getSeconds()));
-        console.log(startUTC);
-        return new Date(Date.now()) >= startUTC;
+        console.log("CURRENT DATE", new Date(Date.now()).toLocaleString("en-US", {timeZone: "Europe/Moscow"}));
+        console.log("START TIME", new Date(this.start_time));
+        return new Date(Date.now()).toLocaleString("en-US", {timeZone: "Europe/Moscow"}) >= new Date(this.start_time);
     }
 
     async addMessage(message) {
