@@ -40,17 +40,20 @@ class Message {
         try {
             const formData = new FormData();
 
-            this.files.forEach(file => {
-                formData.append('files', fs.createReadStream(file.path), {
-                    filename: file.originalname,
-                    contentType: file.mimetype
-                });
-            });
-            const queryString = `?id=${this.id}&title=${this.title}&owner=${this.owner}&createdAt=${this.createdAt}&payload=${this.payload}`;
 
-            const response = await axios.post(`${process.env.DS_HOST}:${process.env.DS_PORT}/api${queryString}`, formData, {
-                'Content-Type': 'multipart/form-data',
-            });
+
+            formData.append('id', this.id);
+            formData.append('title', this.title);
+            formData.append('owner', this.owner);
+            formData.append('sentTime', new Date());
+            formData.append('createdAt', this.createdAt);
+            formData.append('payload', this.payload);
+
+            const response = await axios.post(`${process.env.DS_HOST}:${process.env.DS_PORT}/api/send-to-earth`, formData, {
+                headers: {
+                    ...formData.getHeaders()
+                },
+            })
 
             console.log('Message sended successfully!', response);
         } catch (error) {
