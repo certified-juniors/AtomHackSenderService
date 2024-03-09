@@ -30,7 +30,7 @@ const getAllPeriods = async () => {
     try {
         const res = await pool.query('SELECT * FROM period');
         const formattedPeriods = [];
-        for (let row of res.row) {
+        for (let row of res.rows) {
             formattedPeriods.push([row.start_time, row.end_time, row.speed]);
         }
 
