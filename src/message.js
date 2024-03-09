@@ -48,6 +48,8 @@ class Message {
             formData.append('sentTime', new Date().toISOString());
             formData.append('createdAt', this.createdAt);
             formData.append('payload', this.payload);
+            
+            console.log('Sending request to:', process.env.DS_HOST + ':' + process.env.DS_PORT);
 
             const response = await axios.post(`${process.env.DS_HOST}:${process.env.DS_PORT}/api/send-to-earth`, formData, {
                 headers: {
