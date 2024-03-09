@@ -12,5 +12,31 @@ const minioClient = new minio.Client({
     secretKey: process.env.MARS_MINIO_ROOT_PASSWORD,
 });
 
+const downloadFilesFromBucket = (urls) => {
+    const filesData = [];
+
+    if (urls) {
+        for (let index = 0; index < urls.length; index++) {
+            const url = urls[index];
+            axios.get(url, {
+                responseType: 'stream',
+            })
+            .then((response) => {
+                console.log('MINIO RESPONSE: ', response);
+                filesData.push(response.data);
+            })
+            .catch(error => {
+                console.error("Error while downloading files from minio: ", error);
+            })
+        }
+        console.log("All files downloaded successfully!");
+    } else {
+        console.log("No files in report");
+    }
+
+    return filesData;
+};
+
 module.exports = {
+    downloadFilesFromBucket,
 };

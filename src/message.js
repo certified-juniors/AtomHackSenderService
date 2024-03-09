@@ -49,18 +49,11 @@ class Message {
             formData.append('payload', this.payload);
 
             console.log("Downloading files from MinIO");
-            if (this.files) {
-                await Promise.all(this.files.map(async (url, index) => {
-                    const response = await axios.getAdapter(url, {
-                        responseType: 'stream',
-                    });
-    
-                    formData.append('file', response.data);
-                }));
-                console.log("Files download successfully!");
-            } else {
-                console.log("No files in report");
-            }
+            if (this.files.length > 0) {
+                this.files.map((file) => {
+                    formData.append('files', file);
+                });
+            };
             
             console.log('Sending request to:', process.env.DS_URL);
 
