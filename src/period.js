@@ -55,6 +55,8 @@ class Period {
     }
 
     isStarted() {
+        console.log("CURRENT DATE", new Date(Date.now()));
+        console.log("START TIME", new Date(this.start_time));
         return new Date(Date.now()) >= new Date(this.start_time);
     }
 
