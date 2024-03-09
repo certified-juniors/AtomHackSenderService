@@ -56,7 +56,7 @@ class Period {
 
     isStarted() {
         console.log("Current Time", new Date(new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'})));
-        console.log("start time", new Date(new Date(this.start_time)))
+        console.log("start time", new Date(this.start_time))
         
         return new Date(new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'})) >= new Date(this.start_time);
     }
