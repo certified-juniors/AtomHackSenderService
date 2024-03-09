@@ -20,8 +20,8 @@ const downloadFilesFromBucket = (urls) => {
         for (let index = 0; index < urls.length; index++) {
             const url = urls[index];
             
-            console.log("DOWNLOADING: ", url);
-            axios.get(url, {
+            console.log("DOWNLOADING: ", url.path);
+            axios.get(url.path, {
                 responseType: 'stream',
             })
             .then((response) => {
