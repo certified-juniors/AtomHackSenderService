@@ -45,17 +45,17 @@ class Message {
             formData.append('id', this.id);
             formData.append('title', this.title);
             formData.append('owner', this.owner);
-            formData.append('sentTime', new Date());
+            formData.append('sentTime', new Date().toISOString());
             formData.append('createdAt', this.createdAt);
             formData.append('payload', this.payload);
 
             const response = await axios.post(`${process.env.DS_HOST}:${process.env.DS_PORT}/api/send-to-earth`, formData, {
                 headers: {
-                    ...formData.getHeaders()
+                    'Content-Type': 'multipart/form-data',
                 },
             })
 
-            console.log('Message sended successfully!', response);
+            console.log('Message sended successfully!', response.data);
         } catch (error) {
             console.error('Error while resending message: ', error.code)
         }
