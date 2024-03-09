@@ -2,7 +2,6 @@ const { periods, unhandledMessages } = require('./period');
 const { downloadFilesFromBucket } = require('./storage/minio');
 const { calculateFileSize, calculateAllowedSize } = require('./utils/helpers');
 const axios = require('axios');
-const fs = require('fs');
 
 class Message {
     constructor(jsonString) {

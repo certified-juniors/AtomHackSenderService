@@ -13,5 +13,4 @@ const minioClient = new minio.Client({
 });
 
 module.exports = {
-    downloadFilesFromBucket,
 };
