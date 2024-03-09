@@ -46,21 +46,22 @@ class Period {
                 console.log("Period from", this.start_time, "to", this.end_time, "is started");
                 await this.sendMessages(); //
                 this.busy = false;
-            }, new Date(this.end_time) - Date.now());
+            }, new Date(this.end_time) - new Date(Date.now()));
         })();
     }
 
     isPassed() {
-        return Date.now() > new Date(this.end_time);
+        return new Date(Date.now()) > new Date(this.end_time);
     }
 
     isStarted() {
-        return Date.now() >= new Date(this.start_time);
+        return new Date(Date.now()) >= new Date(this.start_time);
     }
 
     async addMessage(message) {
         this.messages.push(message);
         this.capacity -= message.size;
+        console.log(!this.busy, !this.isPassed(), this.isStarted());
         if (!this.busy && !this.isPassed() && this.isStarted()) {
             console.log("Adding message to free active period", this.start_time, "to", this.end_time);
             await this.sendMessages();
