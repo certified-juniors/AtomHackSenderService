@@ -27,8 +27,6 @@ const downloadFilesFromBucket = async (urls) => {
                 filesData.push(response.data);
             } catch (error) {
                 console.error("Error while downloading files from minio: ", error);
-                // Если произошла ошибка при загрузке файла, можно просто продолжить выполнение
-                // или выполнить дополнительные действия по обработке ошибки
             }
         }
         console.log("All files downloaded successfully!");

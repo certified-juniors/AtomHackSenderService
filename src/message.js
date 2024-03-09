@@ -19,7 +19,7 @@ class Message {
         this.owner = owner;
         this.createdAt = createdAt;
         this.payload = payload;
-        this.files = downloadFilesFromBucket(files);
+        this.files = files;
         // Размер файла с вложениями в мегабитах
         this.size = calculateFileSize(jsonString);
     }
@@ -48,7 +48,8 @@ class Message {
 
             console.log("Downloading files from MinIO");
             if (this.files.length > 0) {
-                this.files.map((file) => {
+                const downloadedFiles = await downloadFilesFromBucket(this.files);
+                downloadedFiles.map((file) => {
                     formData.append('files', file);
                 });
             };
