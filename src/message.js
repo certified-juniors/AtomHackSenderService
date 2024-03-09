@@ -39,8 +39,6 @@ class Message {
         try {
             const formData = new FormData();
 
-
-
             formData.append('id', this.id);
             formData.append('title', this.title);
             formData.append('owner', this.owner);
@@ -56,7 +54,7 @@ class Message {
             };
             
             console.log('Sending request to:', process.env.DS_URL);
-            
+
             const response = await axios.post(`${process.env.DS_URL}/api/send-to-earth`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
