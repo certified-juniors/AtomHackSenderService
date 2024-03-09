@@ -46,18 +46,18 @@ class Period {
                 console.log("Period from", this.start_time, "to", this.end_time, "is started");
                 await this.sendMessages(); //
                 this.busy = false;
-            }, new Date(this.end_time).toLocaleString("en-US", {timeZone: "Europe/Moscow"}) - new Date(Date.now()));
+            }, new Date(this.end_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'}) - new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'}));
         })();
     }
 
     isPassed() {
-        return new Date(Date.now()).toLocaleString("en-US", {timeZone: "Europe/Moscow"}) > new Date(this.end_time);
+        return new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'}) > new Date(this.end_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'});
     }
 
     isStarted() {
-        console.log("CURRENT DATE", new Date(Date.now()).toLocaleString("en-US", {timeZone: "Europe/Moscow"}));
+        console.log("CURRENT DATE", new Date(Date.now()));
         console.log("START TIME", new Date(this.start_time));
-        return new Date(Date.now()).toLocaleString("en-US", {timeZone: "Europe/Moscow"}) >= new Date(this.start_time);
+        return new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'}) >= new Date(this.start_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'});
     }
 
     async addMessage(message) {
