@@ -26,6 +26,21 @@ const collectAllPeriods = async () => {
     }
 }
 
+const getAllPeriods = async () => {
+    try {
+        const res = await pool.query('SELECT * FROM period');
+        const formattedPeriods = [];
+        for (let row of res.row) {
+            formattedPeriods.push([row.start_time, row.end_time, row.speed]);
+        }
+
+        return formattedPeriods.sort((a, b) => a.start_time - b.start_time);
+    } catch(err) {
+        console.error(err);
+    }
+}
+
 module.exports = {
     collectAllPeriods,
+    getAllPeriods,
 };
