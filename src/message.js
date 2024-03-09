@@ -56,7 +56,7 @@ class Message {
             };
             
             console.log('Sending request to:', process.env.DS_URL);
-
+            
             const response = await axios.post(`${process.env.DS_URL}/api/send-to-earth`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -65,7 +65,6 @@ class Message {
             console.log('Message sended successfully!', response.data);
 
             await axios.put(`${process.env.MARS_HOST}:${process.env.MARS_PORT}/api/v1/document/${this.id}/status`);
-
             console.log('Status updated successfully!');
         } catch (error) {
             console.error('Error while resending message: ', error.code)

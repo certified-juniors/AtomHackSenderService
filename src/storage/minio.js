@@ -19,6 +19,8 @@ const downloadFilesFromBucket = (urls) => {
     if (urls) {
         for (let index = 0; index < urls.length; index++) {
             const url = urls[index];
+            
+            console.log("DOWNLOADING: ", url);
             axios.get(url, {
                 responseType: 'stream',
             })
@@ -28,11 +30,10 @@ const downloadFilesFromBucket = (urls) => {
             })
             .catch(error => {
                 console.error("Error while downloading files from minio: ", error);
+                return [];
             })
         }
         console.log("All files downloaded successfully!");
-    } else {
-        console.log("No files in report");
     }
 
     return filesData;
