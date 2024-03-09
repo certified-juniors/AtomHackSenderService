@@ -57,6 +57,7 @@ class Period {
     isStarted() {
         console.log("CURRENT DATE", (new Date(Date.now())));
         const startUTC = new Date(Date.UTC(this.start_time.getFullYear(), this.start_time.getMonth(), this.start_time.getDate(), this.start_time.getHours(), this.start_time.getMinutes(), this.start_time.getSeconds()));
+        console.log(startUTC);
         return new Date(Date.now()) >= startUTC;
     }
 
