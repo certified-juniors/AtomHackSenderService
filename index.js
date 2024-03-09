@@ -20,7 +20,7 @@ app.use(express.json());
 app.post("/periods", updatePeriods);
 app.get("/periods", (req, res) => {
     console.log("GET /periods", periods);
-    res.status(200).send();
+    res.status(200).send(periods);
 });
 
 collectAllPeriods().then(() => {
