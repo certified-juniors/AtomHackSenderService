@@ -1,4 +1,4 @@
-const { calculateAllowedSize } = require("./utils/helpers");
+const { calculateAllowedSize, formatTimeToTimestamp } = require("./utils/helpers");
 
 let periods = [];
 let unhandledMessages = [];
@@ -46,18 +46,18 @@ class Period {
                 console.log("Period from", this.start_time, "to", this.end_time, "is started");
                 await this.sendMessages(); //
                 this.busy = false;
-            }, new Date(this.end_time) - new Date(Date.now()));
+            }, formatTimeToTimestamp(new Date(this.end_time)) - formatTimeToTimestamp(new Date(Date.now())));
         })();
     }
 
     isPassed() {
-        return new Date(Date.now()) > new Date(this.end_time);
+        return formatTimeToTimestamp(new Date(Date.now())) > formatTimeToTimestamp(new Date(this.end_time));
     }
 
     isStarted() {
-        console.log("CURRENT DATE", new Date(Date.now()));
-        console.log("START TIME", new Date(this.start_time));
-        return new Date(Date.now()) >= new Date(this.start_time);
+        console.log("CURRENT DATE", formatTimeToTimestamp(new Date(Date.now())));
+        console.log("START TIME", formatTimeToTimestamp(new Date(this.start_time)));
+        return formatTimeToTimestamp(new Date(Date.now())) >= formatTimeToTimestamp(new Date(this.start_time));
     }
 
     async addMessage(message) {

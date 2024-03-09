@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 const calculateDeltaTime = (from, to) =>
     Math.abs(new Date(from) - new Date(to)) / 1000;
 
@@ -15,7 +17,14 @@ const calculateFileSize = (stringifiedMessage) => {
     return filesSize * 8 + payloadSize * 8;
 }
 
+const formatTimeToTimestamp = (date) => {
+    const dateInMoscow = moment(date).tz('Europe/Moscow');
+
+    return dateInMoscow.valueOf();
+}
+
 module.exports = {
     calculateAllowedSize,
     calculateFileSize,
+    formatTimeToTimestamp,
 };
