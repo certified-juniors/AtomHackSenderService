@@ -19,6 +19,9 @@ app.use(express.json());
 // Define your routes here
 app.post("/periods", updatePeriods);
 app.get("/periods", getPeriods);
+app.get("/logperiods", (req, res) => {
+    console.log(periods);
+});
 
 collectAllPeriods().then(() => {
     runNewConsumer().catch(error => console.error(`[consumer] ${error.message}`, error));
