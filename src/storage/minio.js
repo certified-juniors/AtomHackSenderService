@@ -1,4 +1,5 @@
 const minio = require('minio');
+const axios = require('axios');
 
 require('dotenv').config();
 
