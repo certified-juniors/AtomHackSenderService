@@ -46,18 +46,19 @@ class Period {
                 console.log("Period from", this.start_time, "to", this.end_time, "is started");
                 await this.sendMessages(); //
                 this.busy = false;
-            }, new Date(this.end_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'}) - new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'}));
+            }, new Date(new Date(this.end_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'})) - new Date(new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'})));
         })();
     }
 
     isPassed() {
-        return new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'}) > new Date(this.end_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'});
+        return new Date(new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'})) > new Date(new Date(this.end_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'}));
     }
 
     isStarted() {
-        console.log("CURRENT DATE", new Date(Date.now()));
-        console.log("START TIME", new Date(this.start_time));
-        return new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'}) >= new Date(this.start_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'});
+        console.log("Current Time", new Date(new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'})));
+        console.log("start time", new Date(new Date(this.start_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'})))
+        
+        return new Date(new Date().toLocaleString('en-US', {timeZone: 'Europe/Moscow'})) >= new Date(new Date(this.start_time).toLocaleString('en-US', {timeZone: 'Europe/Moscow'}));
     }
 
     async addMessage(message) {
