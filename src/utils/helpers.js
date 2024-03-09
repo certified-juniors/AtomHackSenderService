@@ -15,19 +15,7 @@ const calculateFileSize = (stringifiedMessage) => {
     return filesSize * 8 + payloadSize * 8;
 }
 
-const formatTimeToTimestamp = (date, commonTimezone = 'UTC') => {
-    let timestamp = date.getTime();
-
-    let offset = date.getTimezoneOffset();
-
-    let commonOffset = (new Date(commonTimezone)).getTimezoneOffset();
-    timestamp -= (offset - commonOffset) * 60 * 1000;
-
-    return timestamp;
-}
-
 module.exports = {
     calculateAllowedSize,
     calculateFileSize,
-    formatTimeToTimestamp,
 };

@@ -1,4 +1,4 @@
-const { calculateAllowedSize, formatTimeToTimestamp } = require("./utils/helpers");
+const { calculateAllowedSize } = require("./utils/helpers");
 
 let periods = [];
 let unhandledMessages = [];
@@ -46,18 +46,18 @@ class Period {
                 console.log("Period from", this.start_time, "to", this.end_time, "is started");
                 await this.sendMessages(); //
                 this.busy = false;
-            }, formatTimeToTimestamp(new Date(this.end_time)) - formatTimeToTimestamp(new Date(Date.now())));
+            }, new Date(Date.UTC(this.end_time.getFullYear(), this.end_time.getMonth(), this.end_time.getDate(), this.end_time.getHours(), this.end_time.getMinutes(), this.end_time.getSeconds())) - new Date(Date.now()));
         })();
     }
 
     isPassed() {
-        return formatTimeToTimestamp(new Date(Date.now())) > formatTimeToTimestamp(new Date(this.end_time));
+        return new Date(Date.now()) > new Date(Date.UTC(this.end_time.getFullYear(), this.end_time.getMonth(), this.end_time.getDate(), this.end_time.getHours(), this.end_time.getMinutes(), this.end_time.getSeconds()));
     }
 
     isStarted() {
-        console.log("CURRENT DATE", formatTimeToTimestamp(new Date(Date.now())));
-        console.log("START TIME", formatTimeToTimestamp(new Date(this.start_time)));
-        return formatTimeToTimestamp(new Date(Date.now())) >= formatTimeToTimestamp(new Date(this.start_time));
+        console.log("CURRENT DATE", (new Date(Date.now())));
+        const startUTC = new Date(Date.UTC(this.start_time.getFullYear(), this.start_time.getMonth(), this.start_time.getDate(), this.start_time.getHours(), this.start_time.getMinutes(), this.start_time.getSeconds()));
+        return new Date(Date.now()) >= startUTC;
     }
 
     async addMessage(message) {
