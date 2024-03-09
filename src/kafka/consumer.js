@@ -12,6 +12,7 @@ const runNewConsumer = async () => {
 
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
+            console.log("Recieved new message: ", topic, partition, message.value.toString());
             const msg = new Message(message.value.toString());
             msg.handle();
         },

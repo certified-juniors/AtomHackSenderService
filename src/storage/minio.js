@@ -15,7 +15,7 @@ const minioClient = new minio.Client({
 
 const downloadFilesFromBucket = async (urls) => {
     const filesData = [];
-
+    
     if (urls) {
         for (const url of urls) {
             try {
