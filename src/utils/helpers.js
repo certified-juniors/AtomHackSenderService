@@ -7,10 +7,17 @@ const calculateAllowedSize = (from, to, speed) =>
 const calculateFileSize = (stringifiedMessage) => {
     const { id, title, owner, createdAt, payload, files } = JSON.parse(stringifiedMessage);
 
-    const filesSize = files.reduce((acc, file) => acc + file.length, 0);
+    const filesSize = files.reduce((total, file) => total + file.size, 0) || 0;
 
-    const payloadObject = { id, title, owner, createdAt, payload };
-    const payloadSize = JSON.stringify(payloadObject).length;
+    const payloadObject = {
+        id: id,
+        title: title,
+        owner: owner,
+        createdAt: createdAt,
+        payload: payload,
+    };
+
+    const payloadSize = JSON.stringify({payloadObject}).length || 0;
 
     return filesSize * 8 + payloadSize * 8;
 }
