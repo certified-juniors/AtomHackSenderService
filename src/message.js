@@ -56,13 +56,15 @@ class Message {
             console.log("Downloading files from MinIO");
             if (this.files.length > 0) {
                 const downloadedFiles = await downloadFilesFromBucket(this.files);
-                downloadedFiles.map((file) => {
+                downloadedFiles.map(({ file, name }) => {
                     console.log("FILE DEFAULT: ", file);
-                    formData.append('files', new Blob([file]));
+                    const blob = new Blob([file]);
+                    // blob.name = 
+                    formData.append('files', blob, name);
                     console.log('typeof file.buffer', typeof formData["files"])
                 });
             };
-            
+
             console.log('Sending request to:', process.env.DS_URL);
 
             console.log('Form Data payload: ', formData);
