@@ -55,8 +55,8 @@ class Message {
 
             console.log("Downloading files from MinIO");
             if (this.files.length > 0) {
-                const downloadedFiles = await downloadFilesFromBucket(this.files);
-                downloadedFiles.map(({ file, name }) => {
+                // const downloadedFiles = await downloadFilesFromBucket(this.files);
+                this.files.map(({ file, name }) => {
                     console.log("FILE DEFAULT: ", file);
                     const blob = new Blob([file]);
                     // blob.name = 

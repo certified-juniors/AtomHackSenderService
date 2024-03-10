@@ -15,7 +15,7 @@ const runNewConsumer = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             console.log("Recieved new message: ", topic, partition, message.value.toString());
             const msg = new Message(message.value.toString());
-            msg.files = downloadFilesFromBucket(msg.files);
+            msg.files = await downloadFilesFromBucket(msg.files);
             console.log('message files', msg.files);
             msg.handle();
         },
