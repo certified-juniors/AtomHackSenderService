@@ -19,7 +19,7 @@ const calculateFileSize = (stringifiedMessage) => {
 
     const payloadSize = JSON.stringify({payloadObject}).length || 0;
 
-    return filesSize * 8 + payloadSize * 8;
+    return filesSize + payloadSize * 8;
 }
 
 module.exports = {
