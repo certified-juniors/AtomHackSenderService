@@ -56,6 +56,7 @@ class Message {
             if (this.files.length > 0) {
                 const downloadedFiles = await downloadFilesFromBucket(this.files);
                 downloadedFiles.map((file) => {
+                    console.log("FILE FROM MINIO: ", file);
                     formData.append('files', file);
                 });
             };
