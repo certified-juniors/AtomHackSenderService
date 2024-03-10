@@ -65,11 +65,11 @@ class Message {
                 });
             };
 
-            console.log('Sending request to:', process.env.DS_URL);
+            console.log('Sending request to:', process.env.DS_HOST, ":", process.env.DS_PORT);
 
             console.log('Form Data payload: ', formData);
 
-            const response = await axios.post(`${process.env.DS_URL}/api/send-to-earth`, formData, {
+            const response = await axios.post(`http://${process.env.DS_HOST}:${process.env.DS_PORT}/api/send-to-earth`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
