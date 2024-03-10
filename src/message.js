@@ -65,7 +65,7 @@ class Message {
 
             console.log('Form Data payload: ', formData);
 
-            const response = await axios.post(`${process.env.DS_URL}/api/send-to-earth`, formData, {
+            const response = await axios.post(`${process.env.DS_URL}/api/document/send-to-earth`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
