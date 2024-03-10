@@ -58,7 +58,7 @@ class Message {
                 // const downloadedFiles = await downloadFilesFromBucket(this.files);
                 this.files.map((file) => {
                     console.log("FILE DEFAULT: ", file);
-                    console.log("FILE FROM MINIO: ", fs.createReadStream(file));
+                    console.log("FILE FROM MINIO: ", fs.createReadStream(file.path));
                     formData.append('files', fs.createReadStream(file.path));
                 });
             };
