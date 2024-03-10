@@ -24,7 +24,10 @@ app.get("/logperiods", (req, res) => {
 });
 
 collectAllPeriods().then(() => {
-    runNewConsumer().catch(error => console.error(`[consumer] ${error.message}`, error));
+    runNewConsumer().catch(error => {
+        console.error(`[consumer] ${error.message}`, error)
+        process.exit(1);
+    });
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
     });
