@@ -76,7 +76,7 @@ class Message {
             await axios.put(`${process.env.MARS_HOST}:${process.env.MARS_PORT}/api/v1/document/${this.id}/status`);
             console.log('Status updated successfully!');
         } catch (error) {
-            console.error('Error while resending message: ', error.code)
+            console.error('Error while resending message: ', error)
         }
     }
 }
