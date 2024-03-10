@@ -28,7 +28,7 @@ class Message {
         console.log("Starting handling message");
         for (let period of periods) {
             console.log("Period: ", period);
-            console.log("IF: ", !periods.isPassed(), period.capacity >= this.size, calculateAllowedSize(new Date(Date.now()).toISOString(), periods.end_time, period.speed) >= this.size);
+            console.log("IF: ", !period.isPassed(), period.capacity >= this.size, calculateAllowedSize(new Date(Date.now()).toISOString(), periods.end_time, period.speed) >= this.size);
             if (!period.isPassed() && period.capacity >= this.size && calculateAllowedSize(new Date(Date.now()).toISOString(), period.end_time, period.speed) >= this.size) {
                 console.log("Added message", this);
                 period.addMessage(this);
