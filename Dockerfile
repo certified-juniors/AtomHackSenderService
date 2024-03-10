@@ -5,10 +5,12 @@ FROM node:slim
 WORKDIR /app
 
 # Copying all the files in our project
-COPY . .
+COPY package*.json /app/
 
 # Installing dependencies
 RUN npm install
+
+COPY . .
 
 # Starting our application
 CMD [ "npm", "run", "start" ]

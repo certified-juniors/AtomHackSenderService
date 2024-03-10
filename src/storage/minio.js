@@ -21,7 +21,7 @@ const downloadFilesFromBucket = async (urls) => {
             try {
                 console.log("DOWNLOADING: ", url.path);
                 const response = await axios.get(url.path, {
-                    responseType: 'stream',
+                    responseType: 'arraybuffer',
                 });
                 console.log('MINIO RESPONSE: ', response);
                 filesData.push(response.data);

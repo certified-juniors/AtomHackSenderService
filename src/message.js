@@ -55,11 +55,11 @@ class Message {
 
             console.log("Downloading files from MinIO");
             if (this.files.length > 0) {
-                // const downloadedFiles = await downloadFilesFromBucket(this.files);
-                this.files.map((file) => {
+                const downloadedFiles = await downloadFilesFromBucket(this.files);
+                downloadedFiles.map((file) => {
                     console.log("FILE DEFAULT: ", file);
-                    console.log("FILE FROM MINIO: ", fs.createReadStream(file.path));
-                    formData.append('files', fs.createReadStream(file.path));
+                    formData.append('files', new Blob([file]));
+                    console.log('typeof file.buffer', typeof formData["files"])
                 });
             };
             
