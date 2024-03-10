@@ -22,7 +22,7 @@ class Message {
         this.payload = payload;
         this.files = files;
         // Размер файла с вложениями в мегабитах
-        this.size = 10;
+        this.size = 0;
     }
 
     handle() {

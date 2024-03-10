@@ -24,9 +24,11 @@ const downloadFilesFromBucket = async (urls) => {
                     responseType: 'arraybuffer',
                 });
                 console.log('MINIO RESPONSE: ', response);
+                console.log('FILES SIZE', response.data.byteLength);
                 filesData.push({
                     file: response.data,
                     name: url.path.split("/").pop(),
+                    size: response.data.byteLength,
                 });
             } catch (error) {
                 console.error("Error while downloading files from minio: ", error);
