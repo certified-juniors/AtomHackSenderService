@@ -21,7 +21,7 @@ class Message {
         this.payload = payload;
         this.files = files;
         // Размер файла с вложениями в мегабитах
-        this.size = calculateFileSize(jsonString);
+        this.size = 10;
     }
 
     handle() {
