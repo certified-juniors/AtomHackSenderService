@@ -72,6 +72,8 @@ class Period {
     }
 
     async sendMessages() {
+        console.log("SEND MESSAGE METHOD");
+        console.log("messages length: ", this.messages.length);
         if (this.messages.length === 0) {
             this.busy = false;
             return;
