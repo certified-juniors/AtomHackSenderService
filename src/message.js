@@ -2,6 +2,7 @@ const { periods, unhandledMessages } = require('./period');
 const { downloadFilesFromBucket } = require('./storage/minio');
 const { calculateFileSize, calculateAllowedSize } = require('./utils/helpers');
 const axios = require('axios');
+const fs = require('fs');
 
 class Message {
     constructor(jsonString) {
@@ -56,8 +57,8 @@ class Message {
             if (this.files.length > 0) {
                 const downloadedFiles = await downloadFilesFromBucket(this.files);
                 downloadedFiles.map((file) => {
-                    console.log("FILE FROM MINIO: ", file);
-                    formData.append('files', file);
+                    console.log("FILE FROM MINIO: ", fs.createReadStream(file));
+                    formData.append('files', fs);
                 });
             };
             
